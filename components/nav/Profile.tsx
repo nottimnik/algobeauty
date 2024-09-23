@@ -9,9 +9,21 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DashboardIcon, LockOpen1Icon } from "@radix-ui/react-icons";
+import { createBrowserClient } from "@supabase/ssr";
 
 export default function Profile() {
   const user = useUser((state) => state.user);
+  const setUser = useUser((state) => state.setUser);
+
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(undefined);
+  };
 
   return (
     <Popover>
@@ -41,6 +53,7 @@ export default function Profile() {
         <Button
           variant="ghost"
           className="w-full flex items-center justify-between"
+          onClick={handleLogout}
         >
           Logout
           <LockOpen1Icon />
