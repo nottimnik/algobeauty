@@ -26,6 +26,7 @@ import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
 
 const FormSchema = z.object({
   title: z.string().min(2, {
@@ -211,12 +212,12 @@ export default function BlogForm() {
                         <p>Click on preview to see image</p>
                       </>
                     ) : (
-                      <div className="relative">
+                      <div className="relative h-80  mt-5 border rounded-md">
                         <Image
                           src={form.getValues().image_url}
                           alt="preview"
                           fill
-                          className="object-cover object-center"
+                          className="object-cover object-center rounded-md"
                         />
                       </div>
                     )}
@@ -229,6 +230,46 @@ export default function BlogForm() {
                     <FormMessage />
                   </div>
                 )}
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div
+                  className={cn(
+                    "p-2 w-full flex break-words gap-2",
+                    isPreview ? "divide-x-0" : "divide-x"
+                  )}
+                >
+                  <Textarea
+                    placeholder="Title"
+                    {...field}
+                    className={cn(
+                      "border-none text-lg font-medium leading-relaxed resize-none",
+                      isPreview ? "w-0 p-0" : "w-full lg:w-1/2"
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      "lg:px-10",
+                      isPreview
+                        ? "mx-auto w-full lg:w-4/5"
+                        : "w-1/2 lg:block hidden"
+                    )}
+                  >
+                    <h1 className="text-3xl font-medium">
+                      {form.getValues().title}
+                    </h1>
+                  </div>
+                </div>
+              </FormControl>
+              {form.getFieldState("content").invalid &&
+                form.getValues().content && <FormMessage />}
             </FormItem>
           )}
         />
