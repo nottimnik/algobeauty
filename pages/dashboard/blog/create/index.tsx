@@ -243,14 +243,14 @@ export default function BlogForm() {
                 <div
                   className={cn(
                     "p-2 w-full flex break-words gap-2",
-                    isPreview ? "divide-x-0" : "divide-x"
+                    isPreview ? "divide-x-0" : "divide-x h-70vh"
                   )}
                 >
                   <Textarea
-                    placeholder="Title"
+                    placeholder="Content"
                     {...field}
                     className={cn(
-                      "border-none text-lg font-medium leading-relaxed resize-none",
+                      "border-none text-lg font-medium leading-relaxed resize-none h-full",
                       isPreview ? "w-0 p-0" : "w-full lg:w-1/2"
                     )}
                   />
@@ -263,7 +263,7 @@ export default function BlogForm() {
                     )}
                   >
                     <h1 className="text-3xl font-medium">
-                      {form.getValues().title}
+                      {form.getValues().content}
                     </h1>
                   </div>
                 </div>
